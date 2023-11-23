@@ -1,7 +1,7 @@
 # sudoku_solver
  Data for sudoku.csv from : https://www.kaggle.com/datasets/bryanpark/sudoku/
 # Download saved model
- https://drive.google.com/file/d/12tN1ZDK9Yw7mwIoMdcYFjh6sZdc1ugPu/view?usp=sharing \n
+ https://drive.google.com/file/d/12tN1ZDK9Yw7mwIoMdcYFjh6sZdc1ugPu/view?usp=sharing <br />
  unzip the saved_mode.zip
  put the 'saved_model' folder containing 'fingerprint.pb' in 'assets' folder containing server.py
 # Pre-requisite
