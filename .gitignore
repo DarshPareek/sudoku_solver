@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
 sudoku.csv
 sudoku.csv.zip
 archive.zip
+=======
+assets/saved_model/*
+assets/saved_model/*/*
+assets/saved_model/*/*/*
+assets/saved_model/**
+assets/saved_model
+assets/sudoku.csv
+ss.zip
+>>>>>>> master
