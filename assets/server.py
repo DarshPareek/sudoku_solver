@@ -2,7 +2,7 @@ from flask import Flask, jsonify,render_template, request
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import pandas as pd
-from tensorflow import keras
+import keras
 import numpy as np
 app = Flask(__name__,template_folder="templates", static_url_path='/static') 
 model = keras.models.load_model('assets/saved_model/')
