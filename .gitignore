@@ -11,4 +11,5 @@ assets/saved_model/**
 assets/saved_model
 assets/sudoku.csv
 ss.zip
+__pycache__/*
 >>>>>>> master

@@ -1,116 +1,229 @@
-
-
 <!DOCTYPE html> 
 <html> 
 <head> 
     <title>AI Sudoku Solver</title> 
+    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
     <script src="{{url_for('static', filename='jq.js')}}"></script> 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/styles.css') }}"> 
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/static/styles.css') }}">  -->
     <link rel="shortcut icon" href="#">
+    <style>
+        body{
+            padding: 0px;
+            margin: 0px;
+            font-family: 'JetBrains Mono';
+            font-size: 22px;
+	        color: var(--ctp-mocha-text);
+	        background-color: #11111b;
+            /* background-image: linear-gradient(#11111b 90%, rgba(255,255,255, 0.0)), url("sudo.webp"); */
+            background-size:100%;
+            
+        }
+        input{
+            font-family: 'JetBrains Mono';
+            font-size: 22px;
+            appearance: textfield;
+            height: 49px;
+            width: 49px;
+            padding: 0px;
+            margin: 0px;
+            text-align: center;
+            border: 1px solid #f38ba8;
+            background-color: #585b70;
+            color: #a6e3a1 ;
+        }
+        .tl{
+            border-radius: 10px 0px 0px 0px;
+            /* border-width: 0px 0px 3px 1px; */
+            box-shadow: none;
+        }
+        .tr{
+            border-radius: 0px 10px 0px 0px;
+        }
+        .br{
+            border-radius: 0px 0px 10px 0px;
+        }
+        .bl{
+            border-radius: 0px 0px 0px 10px;
+        }
+        .bd{
+            border-width: 1px 1px 3px 1px;
+        }
+        table{
+            border-radius: 15px;
+            border: 5px solid #f38ba8;
+            margin: 0px;
+            padding: 0px;
+            border-collapse: separate !important;
+            border-spacing: 0;
+        }
+        td, tr{
+            margin: 0px;
+            padding: 0px;  
+            
+        }  
+        input #02{
+            color: blue;
+        }
+        input:focus {
+            outline: none !important;
+            /* border:1px solid red; */
+        }
+        .bsr{
+            border-width: 1px 3px 1px 1px;
+        }
+        .bdr{
+            border-width: 1px 3px 3px 1px;
+        }
+        .tablecover{
+            /* height: 100%; */
+            width: 100%;
+            position:absolute;
+            display: flex;
+            top: 25%;
+            justify-content: center;
+        }
+        .desc{
+            margin-top: 14px;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            font-size: 28px;
+            color: #f38ba8;
+            background-color: #11111b;
+        }
+        .maind{
+            display: contents;
+            font-size: 63px;
+            color: #74c7ec;
+            background-color: #11111b;
+        }
+        .bcover{
+            width: 100%;
+            position:absolute;
+            display: flex;
+            top: 77.5%;
+            justify-content: center;
+        }
+        .solve{
+            font-family: 'JetBrains Mono';
+            font-size: 28px;
+            width: 476px;
+            height: 70px;
+            border-radius: 21px;
+            border: 0px;
+            color: #a6e3a1;
+            background-color: #313244;
+            border: 3px solid #f38ba8;
+        }
+    </style>
 </head> 
-<body> 
+<body>
+    <div class="desc"> This is an <br> <span class="maind">AI SUDOKU SOLVER</span><br> The model predicts missing numbers in the sudoku in some seconds. <br> The Solutons might not always be right.
+    </div>
+    <div class="tablecover" >
     <table>
         <tr>
-            <td><input id="00" type = "number" min="1" max="9"></td>
-            <td><input id="01" type = "number" min="1" max="9"></td>
-            <td><input id="02" type = "number" min="1" max="9"></td>
-            <td><input id="03" type = "number" min="1" max="9"></td>
-            <td><input id="04" type = "number" min="1" max="9"></td>
-            <td><input id="05" type = "number" min="1" max="9"></td>
-            <td><input id="06" type = "number" min="1" max="9"></td>
-            <td><input id="07" type = "number" min="1" max="9"></td>
-            <td><input id="08" type = "number" min="1" max="9"></td>
+            <td><input id="00" type = "number" class="tl" ></td>
+            <td><input id="01" type = "number"  ></td>
+            <td><input id="02" type = "number" class="bsr" ></td>
+            <td><input id="03" type = "number"  ></td>
+            <td><input id="04" type = "number"  ></td>
+            <td><input id="05" type = "number" class="bsr" ></td>
+            <td><input id="06" type = "number"  ></td>
+            <td><input id="07" type = "number"  ></td>
+            <td><input id="08" type = "number" class="tr" ></td>
         </tr>
         <tr>
-            <td><input id="10" type = "number" min="1" max="9"></td>
-            <td><input id="11" type = "number" min="1" max="9"></td>
-            <td><input id="12" type = "number" min="1" max="9"></td>
-            <td><input id="13" type = "number" min="1" max="9"></td>
-            <td><input id="14" type = "number" min="1" max="9"></td>
-            <td><input id="15" type = "number" min="1" max="9"></td>
-            <td><input id="16" type = "number" min="1" max="9"></td>
-            <td><input id="17" type = "number" min="1" max="9"></td>
-            <td><input id="18" type = "number" min="1" max="9"></td>
+            <td><input id="10" type = "number"  ></td>
+            <td><input id="11" type = "number"  ></td>
+            <td><input id="12" type = "number" class="bsr" ></td>
+            <td><input id="13" type = "number"  ></td>
+            <td><input id="14" type = "number"  ></td>
+            <td><input id="15" type = "number" class="bsr" ></td>
+            <td><input id="16" type = "number"  ></td>
+            <td><input id="17" type = "number"  ></td>
+            <td><input id="18" type = "number"  ></td>
         </tr>
         <tr>
-            <td><input id="20" type = "number" min="1" max="9"></td>
-            <td><input id="21" type = "number" min="1" max="9"></td>
-            <td><input id="22" type = "number" min="1" max="9"></td>
-            <td><input id="23" type = "number" min="1" max="9"></td>
-            <td><input id="24" type = "number" min="1" max="9"></td>
-            <td><input id="25" type = "number" min="1" max="9"></td>
-            <td><input id="26" type = "number" min="1" max="9"></td>
-            <td><input id="27" type = "number" min="1" max="9"></td>
-            <td><input id="28" type = "number" min="1" max="9"></td>
+            <td><input id="20" type = "number" class="bd"  ></td>
+            <td><input id="21" type = "number" class="bd"  ></td>
+            <td><input id="22" type = "number" class="bdr"  ></td>
+            <td><input id="23" type = "number" class="bd" ></td>
+            <td><input id="24" type = "number" class="bd" ></td>
+            <td><input id="25" type = "number" class="bdr" ></td>
+            <td><input id="26" type = "number" class="bd" ></td>
+            <td><input id="27" type = "number" class="bd" ></td>
+            <td><input id="28" type = "number" class="bd" ></td>
         </tr>
         <tr>
-            <td><input id="30" type = "number" min="1" max="9"></td>
-            <td><input id="31" type = "number" min="1" max="9"></td>
-            <td><input id="32" type = "number" min="1" max="9"></td>
-            <td><input id="33" type = "number" min="1" max="9"></td>
-            <td><input id="34" type = "number" min="1" max="9"></td>
-            <td><input id="35" type = "number" min="1" max="9"></td>
-            <td><input id="36" type = "number" min="1" max="9"></td>
-            <td><input id="37" type = "number" min="1" max="9"></td>
-            <td><input id="38" type = "number" min="1" max="9"></td>
+            <td><input id="30" type = "number"  ></td>
+            <td><input id="31" type = "number"  ></td>
+            <td><input id="32" type = "number" class="bsr" ></td>
+            <td><input id="33" type = "number"  ></td>
+            <td><input id="34" type = "number"  ></td>
+            <td><input id="35" type = "number" class="bsr" ></td>
+            <td><input id="36" type = "number"  ></td>
+            <td><input id="37" type = "number"  ></td>
+            <td><input id="38" type = "number"  ></td>
         </tr>
         <tr>
-            <td><input id="40" type = "number" min="1" max="9"></td>
-            <td><input id="41" type = "number" min="1" max="9"></td>
-            <td><input id="42" type = "number" min="1" max="9"></td>
-            <td><input id="43" type = "number" min="1" max="9"></td>
-            <td><input id="44" type = "number" min="1" max="9"></td>
-            <td><input id="45" type = "number" min="1" max="9"></td>
-            <td><input id="46" type = "number" min="1" max="9"></td>
-            <td><input id="47" type = "number" min="1" max="9"></td>
-            <td><input id="48" type = "number" min="1" max="9"></td>
+            <td><input id="40" type = "number"  ></td>
+            <td><input id="41" type = "number"  ></td>
+            <td><input id="42" type = "number" class="bsr" ></td>
+            <td><input id="43" type = "number"  ></td>
+            <td><input id="44" type = "number"  ></td>
+            <td><input id="45" type = "number" class="bsr" ></td>
+            <td><input id="46" type = "number"  ></td>
+            <td><input id="47" type = "number"  ></td>
+            <td><input id="48" type = "number"  ></td>
         </tr>
         <tr>
-            <td><input id="50" type = "number" min="1" max="9"></td>
-            <td><input id="51" type = "number" min="1" max="9"></td>
-            <td><input id="52" type = "number" min="1" max="9"></td>
-            <td><input id="53" type = "number" min="1" max="9"></td>
-            <td><input id="54" type = "number" min="1" max="9"></td>
-            <td><input id="55" type = "number" min="1" max="9"></td>
-            <td><input id="56" type = "number" min="1" max="9"></td>
-            <td><input id="57" type = "number" min="1" max="9"></td>
-            <td><input id="58" type = "number" min="1" max="9"></td>
+            <td><input id="50" type = "number" class="bd"  ></td>
+            <td><input id="51" type = "number" class="bd"  ></td>
+            <td><input id="52" type = "number" class="bdr"  ></td>
+            <td><input id="53" type = "number" class="bd" ></td>
+            <td><input id="54" type = "number" class="bd" ></td>
+            <td><input id="55" type = "number" class="bdr" ></td>
+            <td><input id="56" type = "number" class="bd" ></td>
+            <td><input id="57" type = "number" class="bd" ></td>
+            <td><input id="58" type = "number" class="bd" ></td>
         </tr>
         <tr>
-            <td><input id="60" type = "number" min="1" max="9"></td>
-            <td><input id="61" type = "number" min="1" max="9"></td>
-            <td><input id="62" type = "number" min="1" max="9"></td>
-            <td><input id="63" type = "number" min="1" max="9"></td>
-            <td><input id="64" type = "number" min="1" max="9"></td>
-            <td><input id="65" type = "number" min="1" max="9"></td>
-            <td><input id="66" type = "number" min="1" max="9"></td>
-            <td><input id="67" type = "number" min="1" max="9"></td>
-            <td><input id="68" type = "number" min="1" max="9"></td>
+            <td><input id="60" type = "number"  ></td>
+            <td><input id="61" type = "number"  ></td>
+            <td><input id="62" type = "number" class="bsr" ></td>
+            <td><input id="63" type = "number"  ></td>
+            <td><input id="64" type = "number"  ></td>
+            <td><input id="65" type = "number" class="bsr" ></td>
+            <td><input id="66" type = "number"  ></td>
+            <td><input id="67" type = "number"  ></td>
+            <td><input id="68" type = "number"  ></td>
         </tr>
         <tr>
-            <td><input id="70" type = "number" min="1" max="9"></td>
-            <td><input id="71" type = "number" min="1" max="9"></td>
-            <td><input id="72" type = "number" min="1" max="9"></td>
-            <td><input id="73" type = "number" min="1" max="9"></td>
-            <td><input id="74" type = "number" min="1" max="9"></td>
-            <td><input id="75" type = "number" min="1" max="9"></td>
-            <td><input id="76" type = "number" min="1" max="9"></td>
-            <td><input id="77" type = "number" min="1" max="9"></td>
-            <td><input id="78" type = "number" min="1" max="9"></td>
+            <td><input id="70" type = "number"  ></td>
+            <td><input id="71" type = "number"  ></td>
+            <td><input id="72" type = "number" class="bsr" ></td>
+            <td><input id="73" type = "number"  ></td>
+            <td><input id="74" type = "number"  ></td>
+            <td><input id="75" type = "number" class="bsr" ></td>
+            <td><input id="76" type = "number"  ></td>
+            <td><input id="77" type = "number"  ></td>
+            <td><input id="78" type = "number"  ></td>
         </tr>
         <tr>
-            <td><input id="80" type = "number" min="1" max="9"></td>
-            <td><input id="81" type = "number" min="1" max="9"></td>
-            <td><input id="82" type = "number" min="1" max="9"></td>
-            <td><input id="83" type = "number" min="1" max="9"></td>
-            <td><input id="84" type = "number" min="1" max="9"></td>
-            <td><input id="85" type = "number" min="1" max="9"></td>
-            <td><input id="86" type = "number" min="1" max="9"></td>
-            <td><input id="87" type = "number" min="1" max="9"></td>
-            <td><input id="88" type = "number" min="1" max="9"></td>
+            <td><input id="80" type = "number" class="bl" ></td>
+            <td><input id="81" type = "number"  ></td>
+            <td><input id="82" type = "number" class="bsr" ></td>
+            <td><input id="83" type = "number"  ></td>
+            <td><input id="84" type = "number"  ></td>
+            <td><input id="85" type = "number" class="bsr" ></td>
+            <td><input id="86" type = "number"  ></td>
+            <td><input id="87" type = "number"  ></td>
+            <td><input id="88" type = "number" class="br" ></td>
         </tr>
     </table>
-    <button onclick="sendData()">Send Data</button> 
+    </div>
+    <div class="bcover"><button class = "solve" onclick="sendData()">SOLVE!</button></div>
     <div id="output"></div> 
     <script> 
         function sendData() { 

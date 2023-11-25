@@ -1,3 +1,45 @@
 body{
-    background-color: brown;
+    background-color: black;
+    padding: 0px;
+    margin: 0px;
+}
+input{
+    appearance: textfield;
+    height: 21px;
+    width: 21px;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    border: 1px solid purple;
+}
+.tl{
+    border-radius: 7px 0px 0px 0px;
+    box-shadow: none;
+}
+.tr{
+    border-radius: 0px 7px 0px 0px;
+}
+.br{
+    border-radius: 0px 0px 7px 0px;
+}
+.bl{
+    border-radius: 0px 0px 0px 7px;
+}
+table{
+    border-radius: 15px;
+    border: 7px solid purple;
+    margin: 0px;
+    padding: 0px;
+    border-collapse: separate !important;
+    border-spacing: 0;
+}
+td, tr{
+    margin: 0px;
+    padding: 0px;
+    
+    
+}
+input:focus {
+    outline: none !important;
+    /* border:1px solid red; */
 }
